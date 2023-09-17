@@ -1,3 +1,4 @@
+import keyConceptsImage from '../assets/images/key-concepts.png'
 import './Header.css'
 
 function Header(props) {
