@@ -44,19 +44,31 @@ function App() {
         }
         console.log(calculatedYearlyData)
 
-        setYearlyData(calculatedYearlyData)
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        })
 
-        // do something with yearlyData ...
+        const formattedYearlyData = calculatedYearlyData.map((data) => ({
+            ...data,
+            yearlyInterest: formatter.format(+data.yearlyInterest),
+            savingsEndOfYear: formatter.format(+data.savingsEndOfYear),
+            yearlyContribution: formatter.format(+data.yearlyContribution),
+            totalInterest: formatter.format(+data.totalInterest),
+            totalInvestedCapital: formatter.format(+data.totalInvestedCapital),
+        }))
+
+        console.log(formattedYearlyData)
+
+        setYearlyData(formattedYearlyData)
     }
 
     return (
         <div>
             <Header />
             <Form onCalculate={calculateHandler} />
-
-            {/* TODO: Show below table conditionally (only once result data is available) */}
-            {/* Show fallback text if no data is available */}
-
             <Results yearlyData={yearlyData} />
         </div>
     )
