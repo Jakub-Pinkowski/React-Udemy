@@ -1,8 +1,12 @@
+import { useState } from 'react'
+
 import Header from './components/Header'
 import Results from './components/Results'
 import Form from './components/Form'
 
 function App() {
+    const [yearlyData, setYearlyData] = useState([])
+
     const calculateHandler = (userInput) => {
         console.log(userInput)
         // Should be triggered when form is submitted
@@ -15,18 +19,36 @@ function App() {
         const expectedReturn = +userInput['expected-return'] / 100
         const duration = +userInput['duration']
 
+        let totalInterest = 0
+        let totalInvestedCapital = 0
+
         // The below code calculates yearly results (total savings, interest etc)
         for (let i = 0; i < duration; i++) {
             const yearlyInterest = currentSavings * expectedReturn
             currentSavings += yearlyInterest + yearlyContribution
+
+            // Convert all relevant properties to numbers before using toFixed
+            const savingsEndOfYear = +currentSavings
+            const yearlyInterestFormatted = yearlyInterest.toFixed(2)
+            const yearlyContributionFormatted = yearlyContribution.toFixed(2)
+            totalInterest += yearlyInterest
+            totalInvestedCapital += yearlyContribution
+            const totalInterestFormatted = totalInterest.toFixed(2)
+            const totalInvestedCapitalFormatted =
+                totalInvestedCapital.toFixed(2)
+
             yearlyData.push({
-                // feel free to change the shape of the data pushed to the array!
                 year: i + 1,
-                yearlyInterest: yearlyInterest,
-                savingsEndOfYear: currentSavings,
-                yearlyContribution: yearlyContribution,
+                yearlyInterest: yearlyInterestFormatted,
+                savingsEndOfYear: savingsEndOfYear.toFixed(2),
+                yearlyContribution: yearlyContributionFormatted,
+                totalInterest: totalInterestFormatted,
+                totalInvestedCapital: totalInvestedCapitalFormatted,
             })
         }
+        console.log(yearlyData)
+
+        setYearlyData(yearlyData)
 
         // do something with yearlyData ...
     }
@@ -39,7 +61,7 @@ function App() {
             {/* Todo: Show below table conditionally (only once result data is available) */}
             {/* Show fallback text if no data is available */}
 
-            <Results />
+            <Results yearlyData={yearlyData} />
         </div>
     )
 }
