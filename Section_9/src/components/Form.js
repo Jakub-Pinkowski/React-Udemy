@@ -18,8 +18,6 @@ const Form = (props) => {
             duration: duration,
         }
 
-        console.log(userInput)
-
         props.onCalculate(userInput)
     }
 
