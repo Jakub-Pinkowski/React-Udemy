@@ -17,3 +17,10 @@
     font-size: 0.85rem;
     color: #c2e9e0;
 }
+
+.fallback {
+    text-align: center;
+    margin: 2rem auto;
+    padding: 1rem;
+    color: #c2e9e0;
+}

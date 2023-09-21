@@ -8,11 +8,7 @@ function App() {
     const [yearlyData, setYearlyData] = useState([])
 
     const calculateHandler = (userInput) => {
-        console.log(userInput)
-        // Should be triggered when form is submitted
-        // You might not directly want to bind it to the submit event on the form though...
-
-        const yearlyData = [] // per-year results
+        const calculatedYearlyData = [] // per-year results
 
         let currentSavings = +userInput['current-savings'] // feel free to change the shape of this input object!
         const yearlyContribution = +userInput['yearly-contribution'] // as mentioned: feel free to change the shape...
@@ -37,7 +33,7 @@ function App() {
             const totalInvestedCapitalFormatted =
                 totalInvestedCapital.toFixed(2)
 
-            yearlyData.push({
+            calculatedYearlyData.push({
                 year: i + 1,
                 yearlyInterest: yearlyInterestFormatted,
                 savingsEndOfYear: savingsEndOfYear.toFixed(2),
@@ -46,9 +42,9 @@ function App() {
                 totalInvestedCapital: totalInvestedCapitalFormatted,
             })
         }
-        console.log(yearlyData)
+        console.log(calculatedYearlyData)
 
-        setYearlyData(yearlyData)
+        setYearlyData(calculatedYearlyData)
 
         // do something with yearlyData ...
     }
@@ -58,7 +54,7 @@ function App() {
             <Header />
             <Form onCalculate={calculateHandler} />
 
-            {/* Todo: Show below table conditionally (only once result data is available) */}
+            {/* TODO: Show below table conditionally (only once result data is available) */}
             {/* Show fallback text if no data is available */}
 
             <Results yearlyData={yearlyData} />

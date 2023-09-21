@@ -1,7 +1,17 @@
 import React from 'react'
 import classes from './Results.module.css'
 
-const Results = ({ yearlyData }) => {
+const Results = (props) => {
+    const { yearlyData } = props
+
+    if (!yearlyData || yearlyData.length === 0) {
+        return (
+            <h3 className={classes.fallback}>
+                Please insert your calculations to see the summary table
+            </h3>
+        )
+    }
+
     return (
         <table className={classes.result}>
             <thead>
