@@ -1,6 +1,6 @@
 import classes from './Results.module.css'
 
-const Results = () => {
+const Results = (props) => {
     return (
         <table className={classes.result}>
             <thead>
