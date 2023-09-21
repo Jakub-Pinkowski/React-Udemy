@@ -1,5 +1,7 @@
 import logo from './assets/investment-calculator-logo.png'
 
+import Header from './components/Header'
+
 function App() {
     const calculateHandler = (userInput) => {
         // Should be triggered when form is submitted
@@ -30,10 +32,7 @@ function App() {
 
     return (
         <div>
-            <header className="header">
-                <img src={logo} alt="logo" />
-                <h1>Investment Calculator</h1>
-            </header>
+            <Header />
 
             <form className="form">
                 <div className="input-group">
