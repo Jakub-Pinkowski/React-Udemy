@@ -1,7 +1,24 @@
-import classes from './AddUser.module.css'
-import Card from '../UI/Card'
-import Button from '../UI/Button'
+import { useState } from 'react'
 
-const AddUser = (props) => {}
+import classes from './AddUser.module.css'
+
+const AddUser = (props) => {
+    const [enteredUsername, setEnteredUsername] = useState('')
+    const [enteredAge, setEnteredAge] = useState('')
+
+    const addUserHandler = (event) => {}
+
+    return (
+        <div className={classes.input}>
+            <form onSubmit={addUserHandler}>
+                <label htmlFor="username">Username</label>
+                <input id="username" type="text" />
+                <label htmlFor="age">Age (Years)</label>
+                <input id="age" type="number" />
+                <button type="submit">Add User</button>
+            </form>
+        </div>
+    )
+}
 
 export default AddUser
