@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import classes from './AddUser.module.css'
+import ErrorModal from './ErrorModal'
 
 const AddUser = (props) => {
     const [enteredUsername, setEnteredUsername] = useState('')
@@ -21,6 +22,11 @@ const AddUser = (props) => {
         }
 
         props.onAddUser(enteredUsername, enteredAge)
+
+        console.log(enteredUsername, enteredAge)
+
+        setEnteredUsername('')
+        setEnteredAge('')
     }
 
     return (
@@ -42,6 +48,10 @@ const AddUser = (props) => {
                 />
                 <button type="submit">Add User</button>
             </form>
+            <ErrorModal
+                title="An error occurred!"
+                message="Something went wrong!"
+            />
         </div>
     )
 }
