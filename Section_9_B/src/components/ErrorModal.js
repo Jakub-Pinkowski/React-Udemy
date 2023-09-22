@@ -1,11 +1,30 @@
+import { useState } from 'react'
 import classes from './ErrorModal.module.css'
 
 const ErrorModal = (props) => {
-    const { title, message } = props
+    const { title, message, onClose } = props
+    const [modalVisible, setModalVisible] = useState(true)
+
+    const closeModalHandler = () => {
+        setModalVisible(false)
+        onClose()
+    }
+
+    const modalStyles = {
+        display: modalVisible ? 'block' : 'none',
+        opacity: modalVisible ? 1 : 0,
+        transform: modalVisible
+            ? 'translate(-50%, -50%) scale(1)'
+            : 'translate(-50%, -50%) scale(0.9)',
+    }
 
     return (
-        <div className={classes.backdrop}>
-            <div className={classes.modal}>
+        <div className={classes.backdrop} onClick={closeModalHandler}>
+            <div
+                className={classes.modal}
+                style={modalStyles}
+                onClick={(event) => event.stopPropagation()}
+            >
                 <header className={classes.header}>
                     <h2>{title}</h2>
                 </header>
@@ -13,7 +32,7 @@ const ErrorModal = (props) => {
                     <p>{message}</p>
                 </div>
                 <footer className={classes.actions}>
-                    <button>Okay</button>
+                    <button onClick={closeModalHandler}>Okay</button>
                 </footer>
             </div>
         </div>

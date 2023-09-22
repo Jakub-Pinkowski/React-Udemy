@@ -34,10 +34,18 @@ const AddUser = (props) => {
         setEnteredAge('')
     }
 
+    const closeModalHandler = () => {
+        setError(null)
+    }
+
     return (
         <div className={classes.input}>
             {error && (
-                <ErrorModal title={error.title} message={error.message} />
+                <ErrorModal
+                    title={error.title}
+                    message={error.message}
+                    onClose={closeModalHandler}
+                />
             )}{' '}
             <form onSubmit={addUserHandler}>
                 <label htmlFor="username">Username</label>
