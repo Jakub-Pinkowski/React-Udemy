@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import classes from './ErrorModal.module.css'
 
+import Button from '../UI/Button'
+
 const ErrorModal = (props) => {
     const { title, message, onClose } = props
     const [modalVisible, setModalVisible] = useState(true)
@@ -32,7 +34,7 @@ const ErrorModal = (props) => {
                     <p>{message}</p>
                 </div>
                 <footer className={classes.actions}>
-                    <button onClick={closeModalHandler}>Okay</button>
+                    <Button onClick={closeModalHandler}>Okay</Button>
                 </footer>
             </div>
         </div>

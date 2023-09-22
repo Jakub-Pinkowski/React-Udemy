@@ -44,16 +44,3 @@
     display: flex;
     justify-content: flex-end;
 }
-
-button {
-    cursor: pointer;
-    border: none;
-    background-color: #f26f6f;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #d23f3f;
-}
