@@ -6,15 +6,40 @@ const AddUser = (props) => {
     const [enteredUsername, setEnteredUsername] = useState('')
     const [enteredAge, setEnteredAge] = useState('')
 
-    const addUserHandler = (event) => {}
+    const addUserHandler = (event) => {
+        event.preventDefault()
+
+        if (
+            enteredUsername.trim().length === 0 ||
+            enteredAge.trim().length === 0
+        ) {
+            // Show modal
+        }
+
+        if (+enteredAge < 1) {
+            // Show modal
+        }
+
+        props.onAddUser(enteredUsername, enteredAge)
+    }
 
     return (
         <div className={classes.input}>
             <form onSubmit={addUserHandler}>
                 <label htmlFor="username">Username</label>
-                <input id="username" type="text" />
+                <input
+                    id="username"
+                    type="text"
+                    value={enteredUsername}
+                    onChange={(event) => setEnteredUsername(event.target.value)}
+                />
                 <label htmlFor="age">Age (Years)</label>
-                <input id="age" type="number" />
+                <input
+                    id="age"
+                    type="number"
+                    value={enteredAge}
+                    onChange={(event) => setEnteredAge(event.target.value)}
+                />
                 <button type="submit">Add User</button>
             </form>
         </div>
