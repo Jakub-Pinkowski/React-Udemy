@@ -8,22 +8,22 @@ function App() {
     const [yearlyData, setYearlyData] = useState([])
 
     const calculateHandler = (userInput) => {
-        const calculatedYearlyData = [] // per-year results
+        const calculatedYearlyData = []
 
-        let currentSavings = +userInput['current-savings'] // feel free to change the shape of this input object!
-        const yearlyContribution = +userInput['yearly-contribution'] // as mentioned: feel free to change the shape...
+        let currentSavings = +userInput['current-savings']
+        const yearlyContribution = +userInput['yearly-contribution']
         const expectedReturn = +userInput['expected-return'] / 100
         const duration = +userInput['duration']
 
         let totalInterest = 0
         let totalInvestedCapital = 0
 
-        // The below code calculates yearly results (total savings, interest etc)
+        //  Loop through the duration of the investment
         for (let i = 0; i < duration; i++) {
             const yearlyInterest = currentSavings * expectedReturn
             currentSavings += yearlyInterest + yearlyContribution
 
-            // Convert all relevant properties to numbers before using toFixed
+            // Save the data for the current year
             const savingsEndOfYear = +currentSavings
             const yearlyInterestFormatted = yearlyInterest.toFixed(2)
             const yearlyContributionFormatted = yearlyContribution.toFixed(2)
