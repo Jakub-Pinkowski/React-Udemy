@@ -29,7 +29,6 @@ const AddUser = (props) => {
 
         props.onAddUser(enteredUsername, enteredAge)
 
-        // Clear the error when a valid user is added
         setError(null)
 
         setEnteredUsername('')
@@ -41,15 +40,15 @@ const AddUser = (props) => {
     }
 
     return (
-        <Card>
-            <div className={classes.input}>
-                {error && (
-                    <ErrorModal
-                        title={error.title}
-                        message={error.message}
-                        onClose={closeModalHandler}
-                    />
-                )}{' '}
+        <div>
+            {error && (
+                <ErrorModal
+                    title={error.title}
+                    message={error.message}
+                    onConfirm={closeModalHandler}
+                />
+            )}
+            <Card className={classes.input}>
                 <form onSubmit={addUserHandler}>
                     <label htmlFor="username">Username</label>
                     <input
@@ -69,8 +68,8 @@ const AddUser = (props) => {
                     />
                     <Button type="submit">Add User</Button>
                 </form>
-            </div>
-        </Card>
+            </Card>
+        </div>
     )
 }
 
