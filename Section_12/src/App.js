@@ -5,6 +5,7 @@ import Cart from './components/Cart/Cart'
 
 function App() {
     const [cartIsShown, setCartIsShown] = useState(false)
+    const [cartItems, setCartItems] = useState([])
 
     const showCartHandler = () => {
         setCartIsShown(true)
@@ -13,6 +14,8 @@ function App() {
     const hideCartHandler = () => {
         setCartIsShown(false)
     }
+
+
 
     return (
         <Fragment>
