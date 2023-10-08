@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const SimpleInput = (props) => {
+const SimpleInput = () => {
     const [enteredName, setEnteredName] = useState('')
     const [enteredNameTouched, setEnteredNameTouched] = useState(false)
     const [enteredEmail, setEnteredEmail] = useState('')
