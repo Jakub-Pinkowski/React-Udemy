@@ -8,6 +8,8 @@ import MealItem from './MealItem/MealItem'
 
 const AvailableMeals = () => {
     const [meals, setMeals] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [httpError, setHttpError] = useState()
 
     const firebaseUrl = 'https://react-counter-64e25-default-rtdb.europe-west1.firebasedatabase.app'
 
@@ -33,10 +35,34 @@ const AvailableMeals = () => {
             }
 
             setMeals(loadedMeals)
+            setIsLoading(false)
         }
 
-        fetchMeals()
+        try {
+            fetchMeals()
+        } catch (error) {
+            setIsLoading(false)
+            setHttpError(error.message)
+        } finally {
+            setIsLoading(false)
+        }
     }, [])
+
+    if (isLoading) {
+        return (
+            <section className={classes.MealsLoading}>
+                <p>Loading...</p>
+            </section>
+        )
+    }
+
+    if (httpError) {
+        return (
+            <section className={classes.MealsError}>
+                <p>{httpError}</p>
+            </section>
+        )
+    }
 
     const mealsList = meals.map((meal) => (
         <MealItem
