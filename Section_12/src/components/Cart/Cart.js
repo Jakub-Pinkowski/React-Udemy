@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 import { useState, useContext } from 'react'
 
 import classes from './Cart.module.css'
@@ -6,6 +8,9 @@ import CartContext from '../../store/cart-context'
 import Modal from '../UI/Modal'
 import CartItem from './CartItem'
 import Checkout from './Checkout'
+
+const firebaseUrl =
+    'https://react-counter-64e25-default-rtdb.europe-west1.firebasedatabase.app/orders.json'
 
 const Cart = (props) => {
     const [isCheckout, setIsCheckout] = useState(false)
@@ -24,6 +29,17 @@ const Cart = (props) => {
 
     const orderHandler = () => {
         setIsCheckout(true)
+    }
+
+    const submitOrderHandler = async (userData) => {
+        const response = await axios.post(firebaseUrl, {
+            user: userData,
+            orderedItems: cartCtx.items,
+        })
+
+        if (response.status === 200) {
+            cartCtx.clearCart()
+        }
     }
 
     const cartItems = (
@@ -62,7 +78,7 @@ const Cart = (props) => {
                     <span>Total Amount</span>
                     <span>{totalAmount}</span>
                 </div>
-                {isCheckout && <Checkout onCancel={props.onClose} />}
+                {isCheckout && <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />}
                 {!isCheckout && modalActions}
             </div>
         </Modal>
