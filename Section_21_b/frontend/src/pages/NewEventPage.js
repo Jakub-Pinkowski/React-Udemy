@@ -1,4 +1,4 @@
-const NewEvent = () => {
+const NewEventPage = () => {
     return (
         <div>
             <h1>New Event Page</h1>
@@ -6,4 +6,4 @@ const NewEvent = () => {
     )
 }
 
-export default NewEvent
+export default NewEventPage
