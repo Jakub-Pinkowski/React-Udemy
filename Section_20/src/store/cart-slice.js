@@ -1,9 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
-
-import { uiActions } from './ui-slice'
-
-const firebaseUrl = 'https://react-counter-64e25-default-rtdb.europe-west1.firebasedatabase.app/'
 
 const initialState = {
     items: [],
@@ -14,6 +9,10 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
+        replaceCart(state, action) {
+            state.totalQuantity = action.payload.totalQuantity
+            state.items = action.payload.items
+        },
         addItemToCart(state, action) {
             const newItem = action.payload
             const existingItem = state.items.find((item) => item.id === newItem.id)
@@ -43,45 +42,6 @@ const cartSlice = createSlice({
         },
     },
 })
-
-export const sendCartData = (cart) => {
-    return async (dispatch) => {
-        dispatch(
-            uiActions.showNotification({
-                status: 'pending',
-                title: 'Sending...',
-                message: 'Sending cart data!',
-            })
-        )
-
-        const sendRequest = async () => {
-            const response = await axios.put(firebaseUrl + 'cart.json', cart)
-
-            if (response.status !== 200) {
-                throw new Error('Sending cart data failed.')
-            }
-        }
-        try {
-            await sendRequest()
-
-            dispatch(
-                uiActions.showNotification({
-                    status: 'success',
-                    title: 'Success!',
-                    message: 'Sent cart data successfully!',
-                })
-            )
-        } catch {
-            dispatch(
-                uiActions.showNotification({
-                    status: 'error',
-                    title: 'Error!',
-                    message: 'Sending cart data failed!',
-                })
-            )
-        }
-    }
-}
 
 export const cartActions = cartSlice.actions
 
