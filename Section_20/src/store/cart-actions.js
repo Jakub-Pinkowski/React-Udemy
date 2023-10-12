@@ -22,7 +22,12 @@ export const fetchCartData = () => {
             const cartData = await fetchData()
             console.log(cartData)
 
-            dispatch(cartActions.replaceCart(cartData))
+            dispatch(
+                cartActions.replaceCart({
+                    items: cartData.items || [],
+                    totalQuantity: cartData.totalQuantity,
+                })
+            )
         } catch {
             dispatch(
                 uiActions.showNotification({
@@ -46,7 +51,10 @@ export const sendCartData = (cart) => {
         )
 
         const sendRequest = async () => {
-            const response = await axios.put(firebaseUrl + 'cart.json', cart)
+            const response = await axios.put(firebaseUrl + 'cart.json', {
+                items: cart.items,
+                totalQuantity: cart.totalQuantity,
+            })
 
             if (response.status !== 200) {
                 throw new Error('Sending cart data failed.')
