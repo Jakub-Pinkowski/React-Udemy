@@ -11,7 +11,7 @@ function HomePage() {
         <div>
             <h1>Home Page</h1>
             <p>
-                <Link to="/products">View Products</Link>
+                <Link to="products">View Products</Link>
             </p>
             <p>
                 <button type="button" onClick={navigateHandler}>
