@@ -1,14 +1,24 @@
-function Products() {
+import { Link } from 'react-router-dom'
+
+const PRODUCTS = [
+    { id: 'p1', title: 'A Book' },
+    { id: 'p2', title: 'A Carpet' },
+    { id: 'p3', title: 'An Online Course' },
+]
+
+function ProductsPage() {
     return (
-        <div>
+        <>
             <h1>The Products Page</h1>
             <ul>
-                <li>A Book</li>
-                <li>A Carpet</li>
-                <li>An Online Course</li>
+                {PRODUCTS.map((product) => (
+                    <li key={product.id}>
+                        <Link to={`/products/${product.id}`}>{product.title}</Link>
+                    </li>
+                ))}
             </ul>
-        </div>
+        </>
     )
 }
 
-export default Products
+export default ProductsPage
