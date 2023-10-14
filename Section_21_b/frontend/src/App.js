@@ -1,17 +1,18 @@
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import RootLayout from './pages/Root'
 import EditEventPage from './pages/EditEventPage'
+import ErrorPage from './pages/ErrorPage'
 import EventDetailPage, {
     loader as eventDetailLoader,
     action as deleteEventAction,
 } from './pages/EventDetailPage'
 import EventsPage, { loader as eventsLoader } from './pages/EventsPage'
-import HomePage from './pages/HomePage'
 import EventsRootLayout from './pages/EventsRoot'
+import HomePage from './pages/HomePage'
 import NewEventPage from './pages/NewEventPage'
-import ErrorPage from './pages/ErrorPage'
+import RootLayout from './pages/Root'
 import { action as manipulateEventAction } from './components/EventForm'
+import NewsletterPage, { action as newsletterAction } from './pages/Newsletter'
 
 const router = createBrowserRouter([
     {
@@ -19,10 +20,7 @@ const router = createBrowserRouter([
         element: <RootLayout />,
         errorElement: <ErrorPage />,
         children: [
-            {
-                index: true,
-                element: <HomePage />,
-            },
+            { index: true, element: <HomePage /> },
             {
                 path: 'events',
                 element: <EventsRootLayout />,
@@ -56,16 +54,17 @@ const router = createBrowserRouter([
                     },
                 ],
             },
+            {
+                path: 'newsletter',
+                element: <NewsletterPage />,
+                action: newsletterAction,
+            },
         ],
     },
 ])
 
 function App() {
-    return (
-        <RouterProvider router={router}>
-            <Outlet />
-        </RouterProvider>
-    )
+    return <RouterProvider router={router} />
 }
 
 export default App
