@@ -18,7 +18,7 @@ export async function loader({ request, params }) {
 
     const response = await fetch(`${eventsUlr}/${id}`)
 
-    if (response.ok) {
+    if (!response.ok) {
         throw json({ message: 'Could not fetch event' }, { status: 500 })
     } else {
         return response
@@ -32,7 +32,9 @@ export async function action({ request, params }) {
         method: 'DELETE',
     })
 
-    if (response.ok) {
+    console.log(response)
+
+    if (!response.ok) {
         throw json({ message: 'Could not delete the event' }, { status: 500 })
     }
 
