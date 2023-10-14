@@ -1,47 +1,39 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
-const DUMMY_EVENTS = [
-    {
-        id: 'e1',
-        title: 'Programming for everyone',
-        description: 'Learn about programming languages in 2021',
-        location: 'Somestreet 25, 12345 San Somewhereo',
-        date: '2021-05-12',
-        image: 'images/coding-event.jpg',
-        isFeatured: false,
-    },
-    {
-        id: 'e2',
-        title: 'Networking for introverts',
-        description: 'Learn how to connect with people without leaving your home.',
-        location: 'New Wall Street 5, 98765 New Work',
-        date: '2021-05-30',
-        image: 'images/introvert-event.jpg',
-        isFeatured: true,
-    },
-    {
-        id: 'e3',
-        title: 'Networking for extroverts',
-        description: 'You probably need no help with networking in general.',
-        location: 'My Street 12, 10115 Broke City',
-        date: '2022-04-10',
-        image: 'images/extrovert-event.jpg',
-        isFeatured: true,
-    },
-]
+import EventsList from '../components/EventsList'
 
-const EventsPage = () => {
+const url = 'http://localhost:8080/events'
+
+function EventsPage() {
+    const [isLoading, setIsLoading] = useState(false)
+    const [fetchedEvents, setFetchedEvents] = useState()
+    const [error, setError] = useState()
+
+    useEffect(() => {
+        async function fetchEvents() {
+            setIsLoading(true)
+            const response = await fetch(url)
+
+            if (!response.ok) {
+                setError('Fetching events failed.')
+            } else {
+                const resData = await response.json()
+                setFetchedEvents(resData.events)
+            }
+            setIsLoading(false)
+        }
+
+        fetchEvents()
+    }, [])
     return (
-        <div>
-            <h1>Events Page</h1>
-            <ul>
-                {DUMMY_EVENTS.map((event) => (
-                    <li key={event.id}>
-                        <Link to={event.id}>{event.title}</Link>
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <>
+            <div style={{ textAlign: 'center' }}>
+                {isLoading && <p>Loading...</p>}
+                {error && <p>{error}</p>}
+            </div>
+            {!isLoading && fetchedEvents && <EventsList events={fetchedEvents} />}
+        </>
     )
 }
 
