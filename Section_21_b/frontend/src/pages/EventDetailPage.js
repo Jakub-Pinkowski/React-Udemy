@@ -1,11 +1,11 @@
-import { useLoaderData, json } from 'react-router-dom'
+import { useRouteLoaderData, json } from 'react-router-dom'
 
 import EventItem from '../components/EventItem'
 
 const eventsUlr = 'http://localhost:8080/events'
 
 const EventDetailPage = () => {
-    const data = useLoaderData()
+    const data = useRouteLoaderData('event-detail')
     const event = data.event
 
     return <EventItem event={event} />
