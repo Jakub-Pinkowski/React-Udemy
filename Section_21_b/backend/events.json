@@ -1,11 +1,1 @@
-{
-    "events": [
-        {
-            "id": "e1",
-            "title": "A dummy event",
-            "date": "2023-02-22",
-            "image": "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg",
-            "description": "Join this amazing event and connect with fellow developers."
-        }
-    ]
-}
+{"events":[{"title":"asd","image":"https://unsplash.com/photos/a-man-standing-in-front-of-a-wall-holding-a-skateboard-da_x3cCM48g","date":"2023-10-06","description":"dfgdfgtdfrgdfgdfgdfg","id":"4588914e-83e5-4076-b8e8-fdae3f311a79"},{"title":"asdasda","image":"https://unsplash.com/photos/a-man-standing-in-front-of-a-wall-holding-a-skateboard-da_x3cCM48g","date":"2023-10-06","description":"asdasdas","id":"3600d639-3e78-430c-8b43-ee49609f3b12"},{"title":"asd","image":"https://unsplash.com/photos/a-pink-background-with-many-different-types-of-ornaments-A13_w2uHBoA","date":"2023-10-13","description":"asdasdasd","id":"c36c30c2-20cb-44c4-b581-b247dfe069e7"},{"title":"New event","image":"https://unsplash.com/photos/a-pink-background-with-many-different-types-of-ornaments-A13_w2uHBoA","date":"2023-10-12","description":"Whatever","id":"3e9b3838-35d4-4b09-b672-fa7386ca8a89"},{"id":"e1","title":"A dummy event","date":"2023-02-22","image":"https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg","description":"Join this amazing event and connect with fellow developers."}]}

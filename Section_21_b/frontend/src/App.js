@@ -6,7 +6,7 @@ import EventDetailPage, { loader as eventDetailLoader } from './pages/EventDetai
 import EventsPage, { loader as eventsLoader } from './pages/EventsPage'
 import HomePage from './pages/HomePage'
 import EventsRootLayout from './pages/EventsRoot'
-import NewEventPage from './pages/NewEventPage'
+import NewEventPage, { action as newEventAction } from './pages/NewEventPage'
 import ErrorPage from './pages/ErrorPage'
 
 const router = createBrowserRouter([
@@ -46,6 +46,7 @@ const router = createBrowserRouter([
                     {
                         path: 'new',
                         element: <NewEventPage />,
+                        action: newEventAction,
                     },
                 ],
             },
