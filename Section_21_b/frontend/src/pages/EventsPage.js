@@ -19,7 +19,14 @@ export async function loader() {
     const response = await fetch(eventsUlr)
 
     if (response.status !== 200) {
-        throw { message: 'Failed to fetch events' }
+        throw new Response(
+            JSON.stringify({
+                message: 'Failed to fetch events',
+            }),
+            {
+                status: 500,
+            }
+        )
     } else {
         const events = response.data.events
         return events
