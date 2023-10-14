@@ -13,7 +13,7 @@ function EventsPage() {
     useEffect(() => {
         async function fetchEvents() {
             setIsLoading(true)
-            const response = await fetch(url)
+            const response = await axios.get(url)
 
             if (!response.ok) {
                 setError('Fetching events failed.')
