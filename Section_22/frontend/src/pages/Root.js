@@ -17,4 +17,3 @@ function RootLayout() {
 }
 
 export default RootLayout;
-F
