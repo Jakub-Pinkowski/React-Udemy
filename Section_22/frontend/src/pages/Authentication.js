@@ -15,15 +15,13 @@ export async function action({ request }) {
     if (mode !== 'login' && mode !== 'signup') {
         return json({ message: 'Unsopported mode.' }, { status: 422 })
     }
-
     const data = await request.formData()
     const authData = {
         email: data.get('email'),
         password: data.get('password'),
     }
 
-
-    const response = await fetch('http://localhost:8080' + mode, {
+    const response = await fetch('http://localhost:8080/' + mode, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
