@@ -23,6 +23,7 @@ export async function loader() {
     if (response.status !== 200) {
         throw new Error('Error loading events')
     } else {
-        return response.data.events
+        const events = response.data.events
+        return events
     }
 }
