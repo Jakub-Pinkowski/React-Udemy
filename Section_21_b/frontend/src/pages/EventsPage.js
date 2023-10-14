@@ -7,11 +7,9 @@ const eventsUrl = 'http://localhost:8080/events'
 function EventsPage() {
     const { events } = useLoaderData()
 
-    console.log(events)
-
     return (
-        <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
-            <Await resolve={events}>{(loadedEvents) => <EventsList events={loadedEvents} />}</Await>
+        <Suspense fallback={<p>Loading...</p>}>
+            <Await resolve={events}>{(events) => <EventsList events={events} />}</Await>
         </Suspense>
     )
 }
@@ -25,7 +23,8 @@ async function loadEvents() {
         throw json({ message: 'Could not fetch events' }, { status: 500 })
     } else {
         const resData = await response.json()
-        return resData
+        const events = resData.events
+        return events
     }
 }
 
