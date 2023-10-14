@@ -1,9 +1,7 @@
 import { useLoaderData } from 'react-router-dom'
-import axios from 'axios'
-
 import EventsList from '../components/EventsList'
 
-const eventsUlr = 'http://localhost:8080/events'
+const eventsUlr = 'http://localhost:8080/eveasdasdnts'
 
 function EventsPage() {
     const events = useLoaderData()
@@ -18,10 +16,10 @@ function EventsPage() {
 export default EventsPage
 
 export async function loader() {
-    const response = await axios.get(eventsUlr)
+    const response = await fetch(eventsUlr)
 
     if (response.status !== 200) {
-        throw new Error('Error loading events')
+        throw { message: 'Failed to fetch events' }
     } else {
         const events = response.data.events
         return events
