@@ -9,16 +9,15 @@ import HomePage from './pages/HomePage'
 import EventsRootLayout from './pages/EventsRoot'
 import NewEventPage from './pages/NewEventPage'
 
-const url = 'http://localhost:8080/events'
+const eventsUlr = 'http://localhost:8080/events'
 
 const eventsLoader = async () => {
-    const response = await axios.get(url)
+    const response = await axios.get(eventsUlr)
 
-    if (!response.ok) {
-        // TODO: handle error
+    if (response.status !== 200) {
+        throw new Error('Error loading events')
     } else {
-        const resData = await response.json()
-        return resData.events
+        return response.data.events
     }
 }
 
