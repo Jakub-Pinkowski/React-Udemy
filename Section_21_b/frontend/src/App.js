@@ -1,4 +1,3 @@
-// 6. Output a list of dummy events to the EventsPage
 //    Every list item should include a link to the respective EventDetailPage
 // 7. Output the ID of the selected event on the EventDetailPage
 // BONUS: Add another (nested) layout route that adds the <EventNavigation> component above all /events... page components
@@ -10,6 +9,8 @@ import EditEventPage from './pages/EditEventPage'
 import EventDetailPage from './pages/EventDetailPage'
 import EventsPage from './pages/EventsPage'
 import HomePage from './pages/HomePage'
+import EventsRootLayout from './pages/EventsRoot'
+import NewEventPage from './pages/NewEventPage'
 
 const router = createBrowserRouter([
     {
@@ -22,20 +23,24 @@ const router = createBrowserRouter([
             },
             {
                 path: 'events',
-                element: <EventsPage />,
+                element: <EventsRootLayout />,
                 children: [
+                    {
+                        index: true,
+                        element: <EventsPage />,
+                    },
                     {
                         path: ':eventId',
                         element: <EventDetailPage />,
                     },
                     {
-                        path: 'new',
-                        element: <EditEventPage />,
-                    },
-                    {
                         path: ':eventId/edit',
                         element: <EditEventPage />,
                     },
+                    {
+                        path: 'new',
+                        element: <NewEventPage />,
+                    }
                 ],
             },
         ],
