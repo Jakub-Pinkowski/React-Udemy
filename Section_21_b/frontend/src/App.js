@@ -1,25 +1,12 @@
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
-import axios from 'axios'
 
 import RootLayout from './pages/Root'
 import EditEventPage from './pages/EditEventPage'
 import EventDetailPage from './pages/EventDetailPage'
-import EventsPage from './pages/EventsPage'
+import EventsPage, {loader as eventsLoader} from './pages/EventsPage'
 import HomePage from './pages/HomePage'
 import EventsRootLayout from './pages/EventsRoot'
 import NewEventPage from './pages/NewEventPage'
-
-const eventsUlr = 'http://localhost:8080/events'
-
-const eventsLoader = async () => {
-    const response = await axios.get(eventsUlr)
-
-    if (response.status !== 200) {
-        throw new Error('Error loading events')
-    } else {
-        return response.data.events
-    }
-}
 
 const router = createBrowserRouter([
     {
