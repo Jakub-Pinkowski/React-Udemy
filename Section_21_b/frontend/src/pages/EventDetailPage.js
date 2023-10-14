@@ -1,18 +1,20 @@
-import { useRouteLoaderData, json, redirect } from 'react-router-dom'
+import { useRouteLoaderData, json, redirect, defer, Await } from 'react-router-dom'
+import { Suspense } from 'react'
 
 import EventItem from '../components/EventItem'
 import EventsList from '../components/EventsList'
 
-const eventsUlr = 'http://localhost:8080/events'
+const eventsUrl = 'http://localhost:8080/events'
 
 const EventDetailPage = () => {
-    const data = useRouteLoaderData('event-detail')
-    const event = data.event
+    const { event, events } = useRouteLoaderData('event-detail')
 
     return (
         <>
-            <EventItem event={event} />
-            <EventsList events={data.events} />
+            <Suspense fallback={<p>Loading...</p>}>
+                <Await resolve={event}>{(event) => <EventItem event={event} />}</Await>
+                <Await resolve={events}>{(events) => <EventsList events={events} />}</Await>
+            </Suspense>
         </>
     )
 }
@@ -20,9 +22,7 @@ const EventDetailPage = () => {
 export default EventDetailPage
 
 async function loadEvent(id) {
-    const id = params.eventId
-
-    const response = await fetch(`${eventsUlr}/${id}`)
+    const response = await fetch(`${eventsUrl}/${id}`)
 
     if (!response.ok) {
         throw json({ message: 'Could not fetch event' }, { status: 500 })
@@ -45,10 +45,19 @@ async function loadEvents() {
     }
 }
 
+export async function loader({ request, params }) {
+    const id = params.eventId
+
+    return defer({
+        event: await loadEvent(id),
+        events: loadEvents(),
+    })
+}
+
 export async function action({ request, params }) {
     const id = params.eventId
 
-    const response = await fetch(`${eventsUlr}/${id}`, {
+    const response = await fetch(`${eventsUrl}/${id}`, {
         method: 'DELETE',
     })
 
