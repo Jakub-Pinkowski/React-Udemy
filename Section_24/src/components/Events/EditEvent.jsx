@@ -12,7 +12,7 @@ export default function EditEvent() {
     const navigate = useNavigate()
 
     const { data, isPending, isError, error } = useQuery({
-        queryKey: ['event', id],
+        queryKey: ['events', id],
         queryFn: ({ signal }) =>
             fetchEvent({
                 signal,
@@ -20,15 +20,17 @@ export default function EditEvent() {
             }),
     })
 
-    const {
-        mutate,
-        isPending: isPendingUpdate,
-        isError: isErrorUpdate,
-        error: updateError,
-    } = useMutation({
+    const { mutate } = useMutation({
         mutationFn: updateEvent,
-        onMutate: (data) => {
-            queryClient.setQueryData(['events', id], data)
+        onMutate: async (data) => {
+            const newEvent = data.event
+            console.log('newEvent', newEvent)
+
+            await queryClient.cancelQueries({
+                queryKey: ['events', id],
+            })
+            queryClient.setQueryData(['events', id], newEvent)
+            console.log('newNewEvent', newEvent)
         },
     })
 
