@@ -1,5 +1,5 @@
-import { Link, useNavigate, useParams, redirect, useSubmit } from 'react-router-dom'
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { Link, useNavigate, useParams, redirect, useSubmit, useNavigation } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 
 import Modal from '../UI/Modal.jsx'
 import EventForm from './EventForm.jsx'
@@ -11,6 +11,7 @@ export default function EditEvent() {
     const submit = useSubmit()
     const navigate = useNavigate()
 
+    const { state } = useNavigation()
     const { id } = useParams()
 
     const { data, isError, error } = useQuery({
@@ -20,29 +21,6 @@ export default function EditEvent() {
                 signal,
                 id,
             }),
-    })
-
-    const { mutate } = useMutation({
-        mutationFn: updateEvent,
-        onMutate: async (data) => {
-            const newEvent = data.event
-            await queryClient.cancelQueries({
-                queryKey: ['events', id],
-            })
-
-            const previousEvent = queryClient.getQueryData(['events', id])
-            queryClient.setQueryData(['events', id], newEvent)
-
-            return { previousEvent }
-        },
-        onError: (error, data, context) => {
-            queryClient.setQueryData(['events', id], context.previousEvent)
-        },
-        onSettled: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['events', id],
-            })
-        },
     })
 
     function handleSubmit(formData) {
@@ -76,12 +54,18 @@ export default function EditEvent() {
     if (data) {
         content = (
             <EventForm inputData={data} onSubmit={handleSubmit}>
-                <Link to="../" className="button-text">
-                    Cancel
-                </Link>
-                <button type="submit" className="button">
-                    Update
-                </button>
+                {state === 'submitting' ? (
+                    <p>Sending data...</p>
+                ) : (
+                    <>
+                        <Link to="../" className="button-text">
+                            Cancel
+                        </Link>
+                        <button type="submit" className="button">
+                            Update
+                        </button>
+                    </>
+                )}
             </EventForm>
         )
     }
