@@ -66,8 +66,8 @@ export default function EditEvent() {
         )
     }
 
-    return (
-        <Modal onClose={handleClose}>
+    if (data) {
+        content = (
             <EventForm inputData={data} onSubmit={handleSubmit}>
                 <Link to="../" className="button-text">
                     Cancel
@@ -76,6 +76,8 @@ export default function EditEvent() {
                     Update
                 </button>
             </EventForm>
-        </Modal>
-    )
+        )
+    }
+
+    return <Modal onClose={handleClose}>{content}</Modal>
 }
