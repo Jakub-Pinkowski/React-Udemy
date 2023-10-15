@@ -101,3 +101,7 @@ export function loader({ params }) {
             }),
     })
 }
+
+export async function action() {
+    
+}
