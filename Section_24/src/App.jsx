@@ -18,7 +18,6 @@ const router = createBrowserRouter([
     {
         path: '/events',
         element: <Events />,
-
         children: [
             {
                 path: '/events/new',

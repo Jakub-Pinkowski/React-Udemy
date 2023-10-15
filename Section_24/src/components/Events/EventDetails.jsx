@@ -1,24 +1,21 @@
 import { useState } from 'react'
-import { Link, Outlet, useParams, useNavigate } from 'react-router-dom'
+import { Link, Outlet, useNavigate, useParams } from 'react-router-dom'
 import { useQuery, useMutation } from '@tanstack/react-query'
 
 import Header from '../Header.jsx'
+import { fetchEvent, deleteEvent, queryClient } from '../../util/http.js'
 import ErrorBlock from '../UI/ErrorBlock.jsx'
 import Modal from '../UI/Modal.jsx'
-import { fetchEvent, deleteEvent, queryClient } from '../../util/http.js'
 
 export default function EventDetails() {
     const [isDeleting, setIsDeleting] = useState(false)
+
+    const params = useParams()
     const navigate = useNavigate()
-    const { id } = useParams()
 
     const { data, isPending, isError, error } = useQuery({
-        queryKey: ['event', id],
-        queryFn: ({ signal }) =>
-            fetchEvent({
-                signal,
-                id,
-            }),
+        queryKey: ['events', params.id],
+        queryFn: ({ signal }) => fetchEvent({ signal, id: params.id }),
     })
 
     const {
@@ -30,23 +27,23 @@ export default function EventDetails() {
         mutationFn: deleteEvent,
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ['event'],
+                queryKey: ['events'],
                 refetchType: 'none',
             })
             navigate('/events')
         },
     })
 
-    const handleStartDelete = () => {
+    function handleStartDelete() {
         setIsDeleting(true)
     }
 
-    const handleStopDelete = () => {
+    function handleStopDelete() {
         setIsDeleting(false)
     }
 
-    const handleDelete = () => {
-        mutate({ id })
+    function handleDelete() {
+        mutate({ id: params.id })
     }
 
     let content
@@ -63,18 +60,19 @@ export default function EventDetails() {
         content = (
             <div id="event-details-content" className="center">
                 <ErrorBlock
-                    title="Failed to laod event"
-                    message={error.info?.message || 'Failed to fetch event data'}
+                    title="Failed to load event"
+                    message={
+                        error.info?.message || 'Failed to fetch event data, please try again later.'
+                    }
                 />
             </div>
         )
     }
 
     if (data) {
-        const imageSrc = `http://localhost:3000/${data.image}`
         const formattedDate = new Date(data.date).toLocaleDateString('en-US', {
             day: 'numeric',
-            month: 'long',
+            month: 'short',
             year: 'numeric',
         })
 
@@ -88,7 +86,7 @@ export default function EventDetails() {
                     </nav>
                 </header>
                 <div id="event-details-content">
-                    <img src={imageSrc} alt={data.title} />
+                    <img src={`http://localhost:3000/${data.image}`} alt={data.title} />
                     <div id="event-details-info">
                         <div>
                             <p id="event-details-location">{data.location}</p>
@@ -108,9 +106,9 @@ export default function EventDetails() {
             {isDeleting && (
                 <Modal onClose={handleStopDelete}>
                     <h2>Are you sure?</h2>
-                    <p>Do you really want to delete this event? This process cannot be undone.</p>
+                    <p>Do you really want to delete this event? This action cannot be undone.</p>
                     <div className="form-actions">
-                        {isPendingDeletion && <p>Deleting event, please wait...</p>}
+                        {isPendingDeletion && <p>Deleting, please wait...</p>}
                         {!isPendingDeletion && (
                             <>
                                 <button onClick={handleStopDelete} className="button-text">
@@ -125,7 +123,10 @@ export default function EventDetails() {
                     {isErrorDeleting && (
                         <ErrorBlock
                             title="Failed to delete event"
-                            message={deleteError.info?.message || 'Failed to delete event'}
+                            message={
+                                deleteError.info?.message ||
+                                'Failed to delete event, please try again later.'
+                            }
                         />
                     )}
                 </Modal>
