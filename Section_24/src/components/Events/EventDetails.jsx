@@ -110,13 +110,24 @@ export default function EventDetails() {
                     <h2>Are you sure?</h2>
                     <p>Do you really want to delete this event? This process cannot be undone.</p>
                     <div className="form-actions">
-                        <button onClick={handleStopDelete} className="button-text">
-                            Cancel
-                        </button>
-                        <button onClick={handleDelete} className="button">
-                            Delete
-                        </button>
+                        {isPendingDeletion && <p>Deleting event, please wait...</p>}
+                        {!isPendingDeletion && (
+                            <>
+                                <button onClick={handleStopDelete} className="button-text">
+                                    Cancel
+                                </button>
+                                <button onClick={handleDelete} className="button">
+                                    Delete
+                                </button>
+                            </>
+                        )}
                     </div>
+                    {isErrorDeleting && (
+                        <ErrorBlock
+                            title="Failed to delete event"
+                            message={deleteError.info?.message || 'Failed to delete event'}
+                        />
+                    )}
                 </Modal>
             )}
             <Outlet />
