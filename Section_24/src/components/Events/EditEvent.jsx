@@ -27,12 +27,7 @@ export default function EditEvent() {
         error: updateError,
     } = useMutation({
         mutationFn: updateEvent,
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['event'],
-                refetchType: 'none',
-            })
-        },
+        onMutate: () => {},
     })
 
     function handleSubmit(formData) {
