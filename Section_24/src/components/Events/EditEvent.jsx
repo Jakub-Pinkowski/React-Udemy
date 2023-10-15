@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, redirect } from 'react-router-dom'
 import { useQuery, useMutation } from '@tanstack/react-query'
 
 import Modal from '../UI/Modal.jsx'
@@ -102,6 +102,21 @@ export function loader({ params }) {
     })
 }
 
-export async function action() {
-    
+export async function action({ request, params }) {
+    const formData = await request.formData()
+    const updatedEventData = Object.fromEntries(formData)
+    const { id } = params
+
+    await updateEvent({
+        id,
+        event: updatedEventData,
+    })
+
+    await queryClient.invalidateQueries({
+        queryKey: ['events', id],
+    })
+
+    return {
+        redirect: '../',
+    }
 }
