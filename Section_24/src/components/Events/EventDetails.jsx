@@ -17,6 +17,10 @@ export default function EventDetails() {
             }),
     })
 
+    const deleteEventHandler = async () => {
+        await deleteEvent({ id })
+    }
+
     let content
 
     if (isPending) {
@@ -40,13 +44,18 @@ export default function EventDetails() {
 
     if (data) {
         const imageSrc = `http://localhost:3000/${data.image}`
+        const formattedDate = new Date(data.date).toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        })
 
         content = (
             <>
                 <header>
                     <h1>{data.title}</h1>
                     <nav>
-                        <button>Delete</button>
+                        <button onClick={deleteEventHandler}>Delete</button>
                         <Link to="edit">Edit</Link>
                     </nav>
                 </header>
@@ -56,7 +65,7 @@ export default function EventDetails() {
                         <div>
                             <p id="event-details-location">{data.location}</p>
                             <time dateTime={`Todo-DateT$Todo-Time`}>
-                                {data.date} @ {data.time}
+                                {formattedDate} @ {data.time}
                             </time>
                         </div>
                         <p id="event-details-description">{data.description}</p>
