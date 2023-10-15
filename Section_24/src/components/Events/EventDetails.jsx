@@ -1,8 +1,22 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 
 import Header from '../Header.jsx'
+import { fetchEvent, deleteEvent } from '../../util/http.js'
 
 export default function EventDetails() {
+    const { id } = useParams()
+
+    const { data, isLoading } = useQuery(['events', id], () => fetchEvent(id), {
+        enabled: !!id,
+    })
+
+    const deleteMutation = useMutation(deleteEvent, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('events')
+        },
+    })
+
     return (
         <>
             <Outlet />
