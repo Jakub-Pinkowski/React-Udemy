@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams, redirect } from 'react-router-dom'
+import { Link, useNavigate, useParams, redirect, useSubmit } from 'react-router-dom'
 import { useQuery, useMutation } from '@tanstack/react-query'
 
 import Modal from '../UI/Modal.jsx'
@@ -8,8 +8,10 @@ import ErrorBLock from '../UI/ErrorBlock.jsx'
 import { fetchEvent, updateEvent, queryClient } from '../../util/http.js'
 
 export default function EditEvent() {
-    const { id } = useParams()
+    const submit = useSubmit()
     const navigate = useNavigate()
+
+    const { id } = useParams()
 
     const { data, isError, error } = useQuery({
         queryKey: ['events', id],
@@ -44,11 +46,9 @@ export default function EditEvent() {
     })
 
     function handleSubmit(formData) {
-        mutate({
-            id,
-            event: formData,
+        submit(formData, {
+            method: 'PUT',
         })
-        navigate('../')
     }
 
     function handleClose() {
