@@ -5,7 +5,7 @@ import Modal from '../UI/Modal.jsx'
 import EventForm from './EventForm.jsx'
 import LoadingIndicator from '../UI/LoadingIndicator.jsx'
 import ErrorBLock from '../UI/ErrorBlock.jsx'
-import { fetchEvent, updateEvent } from '../../util/http.js'
+import { fetchEvent, updateEvent, queryClient } from '../../util/http.js'
 
 export default function EditEvent() {
     const { id } = useParams()
@@ -27,13 +27,20 @@ export default function EditEvent() {
         error: updateError,
     } = useMutation({
         mutationFn: updateEvent,
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['event'],
+                refetchType: 'none',
+            })
+        },
     })
 
     function handleSubmit(formData) {
         mutate({
             id,
-            data: formData,
+            event: formData,
         })
+        navigate('../')
     }
 
     function handleClose() {
