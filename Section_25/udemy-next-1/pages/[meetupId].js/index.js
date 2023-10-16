@@ -1,7 +1,9 @@
-import NewMeetupForm from '../../components/meetups/NewMeetupForm'
-
-const NewMeetupPage = () => {
-    return <NewMeetupForm />
+const placeHolder = () => {
+    return (
+        <div>
+            <h1>placeHolder</h1>
+        </div>
+    )
 }
 
-export default NewMeetup
+export default placeHolder
