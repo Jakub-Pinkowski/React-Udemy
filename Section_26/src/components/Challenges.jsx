@@ -39,20 +39,28 @@ export default function Challenges() {
                 onSelectType={handleSelectType}
                 selectedType={selectedType}
             >
-                {displayedChallenges.length > 0 && (
-                    <ol className="challenge-items">
-                        <AnimatePresence>
-                            {displayedChallenges.map((challenge) => (
-                                <ChallengeItem
-                                    key={challenge.id}
-                                    challenge={challenge}
-                                    onViewDetails={() => handleViewDetails(challenge.id)}
-                                    isExpanded={expanded === challenge.id}
-                                />
-                            ))}
-                        </AnimatePresence>
-                    </ol>
-                )}
+                <AnimatePresence>
+                    {displayedChallenges.length > 0 && (
+                        <motion.ol
+                            exit={{
+                                y: -30,
+                                opacity: 0,
+                            }}
+                            className="challenge-items"
+                        >
+                            <AnimatePresence>
+                                {displayedChallenges.map((challenge) => (
+                                    <ChallengeItem
+                                        key={challenge.id}
+                                        challenge={challenge}
+                                        onViewDetails={() => handleViewDetails(challenge.id)}
+                                        isExpanded={expanded === challenge.id}
+                                    />
+                                ))}
+                            </AnimatePresence>
+                        </motion.ol>
+                    )}
+                </AnimatePresence>
                 {displayedChallenges.length === 0 && <p>No challenges found.</p>}
             </ChallengeTabs>
         </div>
