@@ -1,5 +1,31 @@
 import { createContext, useState } from 'react'
 
+const DUMMY_CHALLENGES = [
+    {
+        id: Math.random().toString(),
+        title: 'Complete 50 push-ups',
+        description: 'Do 50 push-ups in one set',
+        deadline: new Date(2022, 8, 1),
+        image: { src: '/src/assets/constructing.png', alt: 'Person working on some furniture.' },
+        status: 'active',
+    },
+    {
+        id: Math.random().toString(),
+        title: 'Run 5 miles',
+        description: 'Run 5 miles without stopping',
+        deadline: new Date(2022, 8, 2),
+        image: { src: '/src/assets/constructing.png', alt: 'Person working on some furniture.' },
+        status: 'active',
+    },
+    {
+        id: Math.random().toString(),
+        title: 'Read 100 pages',
+        description: 'Read 100 pages of a book',
+        deadline: new Date(2022, 8, 3),
+        image: { src: '/src/assets/constructing.png', alt: 'Person working on some furniture.' },
+        status: 'active',
+    },
+]
 export const ChallengesContext = createContext({
     challenges: [],
     addChallenge: () => {},
@@ -7,7 +33,9 @@ export const ChallengesContext = createContext({
 })
 
 export default function ChallengesContextProvider({ children }) {
-    const [challenges, setChallenges] = useState([])
+    const [challenges, setChallenges] = useState(DUMMY_CHALLENGES)
+
+    console.log(challenges)
 
     function addChallenge(challenge) {
         setChallenges((prevChallenges) => [
