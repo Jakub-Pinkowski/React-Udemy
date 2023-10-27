@@ -38,6 +38,7 @@ export default function NewChallenge({ onDone }) {
                 'input, textarea',
                 {
                     x: [-10, 10, -10, 10, 0],
+                    borderColor: ['#ff0000', '#ff0000', '#ff0000', '#ff0000', '#ffffff'],
                 },
                 {
                     type: 'spring',
