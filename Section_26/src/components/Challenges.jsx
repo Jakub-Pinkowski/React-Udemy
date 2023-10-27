@@ -66,10 +66,7 @@ export default function Challenges() {
                         <motion.p
                             key="fallback"
                             initial={{ opacity: 0, y: -20 }}
-                            animate={{
-                                opacity: 1,
-                                y: 0,
-                            }}
+                            animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
                         >
                             No challenges found.
