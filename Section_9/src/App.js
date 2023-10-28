@@ -30,8 +30,7 @@ function App() {
             totalInterest += yearlyInterest
             totalInvestedCapital += yearlyContribution
             const totalInterestFormatted = totalInterest.toFixed(2)
-            const totalInvestedCapitalFormatted =
-                totalInvestedCapital.toFixed(2)
+            const totalInvestedCapitalFormatted = totalInvestedCapital.toFixed(2)
 
             calculatedYearlyData.push({
                 year: i + 1,
